@@ -1,0 +1,58 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: docker-builder-prune
+spec:
+  minReadySeconds: 60
+  selector:
+    matchLabels:
+      app: docker-builder-prune
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: docker-builder-prune
+        version: v1
+    spec:
+      volumes:
+      - name: docker-socket
+        hostPath:
+          path: /var/run/docker.sock
+      - name: docker-var-lib
+        hostPath:
+          path: /var/lib/docker
+      dnsConfig:
+        options:
+        - name: edns0
+        - name: single-request
+        - name: single-request-reopen
+        - name: timeout
+          value: '1'
+        - name: attempts
+          value: '2'
+        - name: ndots
+          value: '1'
+      containers:
+      - name: docker-builder-prune
+        image: jamesjj/docker-builder-prune:20191109c
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        volumeMounts:
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
+        - name: docker-var-lib
+          mountPath: /var/lib/docker
+          readOnly: true
+        resources:
+          limits:
+            cpu: 150m
+            memory: 128Mi
+          requests:
+            cpu: 20m
+            memory: 128Mi
