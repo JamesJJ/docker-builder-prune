@@ -23,7 +23,7 @@ while true; do
       printf '[%s] inode usage %d%% for %s - No action taken\n' "${IDENTIFIER}" "${PERCENT}" "${MP}"
     else
       printf '[%s] inode usage %d%% for %s - Pruning\n' "${IDENTIFIER}" "${PERCENT}" "${MP}"
-      docker builder prune --force --filter "${FILTER}"
+      docker builder prune --force --filter "${FILTER}" 2>&1 | sed "s|^|[${IDENTIFIER}] |"
       printf '[%s] prune finished\n' "${IDENTIFIER}"
       sleep 900
     fi
