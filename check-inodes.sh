@@ -4,6 +4,7 @@ MOUNTPOINTS="${MOUNTPOINTS:-/var/lib/docker /data/var_lib_docker}"
 THRESHOLD="${THRESHOLD:-50}"
 FILTER="${FILTER:-unused-for=1h}"
 SLEEP="${SLEEP:-600}"
+REST_TIME="${REST_TIME:-900}"
 
 IDENTIFIER="${IDENTIFIER:-$(hostname -s)}"
 if [ ! -z "${HOST_IP}" ]; then
@@ -25,7 +26,7 @@ while true; do
       printf '[%s] inode usage %d%% for %s - Pruning\n' "${IDENTIFIER}" "${PERCENT}" "${MP}"
       docker builder prune --force --filter "${FILTER}" 2>&1 | sed "s|^|[${IDENTIFIER}] |"
       printf '[%s] prune finished\n' "${IDENTIFIER}"
-      sleep 900
+      sleep "${REST_TIME}"
     fi
   done
 
