@@ -23,6 +23,7 @@ The environment variables shown below are available:
 | `THRESHOLD`          | `50`                                   | Minimum percentage inode usage that will trigger pruning |
 | `FILTER`             | `unused-for=1h`                        | Value of `--filter` argument on 	`docker builder prune` command |
 | `SLEEP`              | `600`                                  | Time to wait between checks. Value in seconds unless suffixed with `h` or `d` for hours & days respectively |
+| `REST_TIME`          | `900`                                  | Additional time to wait after running a prune. Value in seconds unless suffixed with `h` or `d` for hours & days respectively |
 | `IDENTIFIER`         | Short hostname (from `hostname -s`)    | Included in console logs |
 | `HOST_IP`            | Empty                                  | Included in console logs |
 
