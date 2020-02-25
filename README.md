@@ -28,7 +28,4 @@ The environment variables shown below are available:
 | `HOST_IP`            | Empty                                  | Included in console logs |
 
 
-## Notes
-
- * Irrespective of the value of `SLEEP`, the script will wait at least 15 minutes between consecutive executions of `docker builder prune ...`
 
